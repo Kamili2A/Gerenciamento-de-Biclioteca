@@ -56,4 +56,29 @@ def menu_emprestar(lista_livros):
     break 
 if not encontrado:
     print("Livro não encontrado.")
-    
+
+def menu_listar(lista_livros):
+    print("Lista de Livros")
+    if len(lista_livros) == 0:
+        print("Nenhum livro cadastrado.")
+    else: 
+        for livro in lista_livros:
+            print(f"Título: {livro['titulo']} | Autor: {livro['autor']} | Status: {livro['status']}")
+
+def menu_ordenar(lista_livros):
+    print("Ordenar Livros")
+    print("A - Por título | B - Por Autor | C - Por Ano")
+    ordem = input("Escolha a ordenação: ").upper()
+
+    if ordem == 'A':
+        lista_livros.sort(key=lambda x: x['titulo'])
+        print("Livros ordenados por título!")
+    elif ordem == 'B':
+        lista_livros.sort(key=lambda x: x['autor'])
+        print("Livros ordenados por autor!")
+    elif ordem == 'C':
+        lista_livros.sort(key=lambda x: x['ano'])
+        print("Livros ordenados por ano!")
+    else:
+        print("Opção inválida")
+        
