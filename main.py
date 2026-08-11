@@ -81,4 +81,50 @@ def menu_ordenar(lista_livros):
         print("Livros ordenados por ano!")
     else:
         print("Opção inválida")
-        
+
+def principal():
+    arquivo_csv = "livros.csv"
+    lista_livros = carregar_dados(arquivo_csv)
+
+    while True:
+        print("Sistema de Gerenciamento de Biblioteca")
+        print("1 - Cadastrar livro")
+        print("2 - Emprestar livro")
+        print("3 - Devolver livro")
+        print("4 - Listar livros")
+        print("5 - Buscar livro")
+        print("6 - Ordenar livros")
+        print("0 - Sair")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            menu_cadastrar(lista_livros)
+        elif opcao == "2":
+            menu_emprestar(lista_livros)
+        elif opcao == "3":
+            menu_devolver(lista_livros)
+        elif opcao "4":
+            menu_listar(lista_livros)
+        elif opcao "5":
+            print("Buscar livro")
+            termo = input("Digite o título ou autor: ")
+            resultados = buscar_livros(lista_livros, termo)
+            if len(resultados) == 0:
+                print("Nenhum livro encontrado.")
+            else:
+                print("Resultados encontrados:")
+                for livro in resultados:
+                    print(f"- {livro['titulo']} ({livro['autor']}) - {livro['status']}") 
+        elif opcao == "6":
+            menu_ordenar(lista_livros)
+        elif opcao == "0":
+            salvar_dados(lista_livros, arquivo_csv)
+            print("Dados salvos com sucesso. Saindo do sistema...")
+            break 
+        else:
+            print("Opção inválida, tente novamente.")
+
+if __name__ == "__main__":
+    principal()       
+    
