@@ -42,3 +42,18 @@ def menu_cadastrar(lista_livros):
     }
     lista_livros.append(novo_livro)
     print("Livro cadastrado com sucesso!")
+
+def menu_emprestar(lista_livros): 
+    print("Emprestar Livro")
+    isbn_busca = input("Digite o ISBN do livro para emprestar: ")
+    encontrado = False
+    for livro in lista_livros:
+        if livro['status'] == 'disponivel':
+        livro['status'] = 'emprestado'
+        print("Empréstimo realizado com sucesso!")
+    else:
+        print("O livro já está emprestado.")
+    break 
+if not encontrado:
+    print("Livro não encontrado.")
+    
