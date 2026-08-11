@@ -25,3 +25,20 @@ def buscar_livros(biblioteca, termo_busca):
         if termo_busca in livro['titulo'].lower() or ['autor'].lower():
             resultados.append(livro)
     return resultados
+
+def menu_cadastrar(lista_livros):
+    print("Cadastrar novo livro")
+    titulo = input("Título: ")
+    autor = input("Autor: ")
+    ano = input("Ano de publicação: ")
+    isbn = input("Código/ISBN: ")
+
+    novo_livro = {
+        'titulo': titulo,
+        'autor': autor,
+        'ano': ano,
+        'isbn': isbn,
+        'status': 'disponível'
+    }
+    lista_livros.append(novo_livro)
+    print("Livro cadastrado com sucesso!")
