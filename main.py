@@ -17,3 +17,11 @@ def salvar_dados(biblioteca, nome_arquivo):
         escritor.writeheader()
         escritor.writerows(biblioteca)
     return True
+
+def buscar_livros(biblioteca, termo_busca):
+    resultados = []
+    termo_busca = termo_busca.lower()
+    for livro in biblioteca:
+        if termo_busca in livro['titulo'].lower() or ['autor'].lower():
+            resultados.append(livro)
+    return resultados
