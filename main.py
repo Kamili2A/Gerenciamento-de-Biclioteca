@@ -4,7 +4,7 @@ import os
 def carregar_dados(nome_arquivo):
     biblioteca = []
     if os.path.exists(nome_arquivo):
-        with open(nome_arquivo, mode='w', encoding='utf-8') as arquivo:
+        with open(nome_arquivo, mode='r', encoding='utf-8') as arquivo:
             leitor = csv.DictReader(arquivo)
             for linha in leitor:
                 biblioteca.append(linha)
@@ -12,7 +12,7 @@ def carregar_dados(nome_arquivo):
 
 def salvar_dados(biblioteca, nome_arquivo): 
     with open(nome_arquivo, mode='w', encoding='utf-8', newline='') as arquivo:
-        campos = ['titulo', 'autor', 'ano', 'isnb', 'status']
+        campos = ['titulo', 'autor', 'ano', 'isbn', 'status']
         escritor = csv.DictWriter(arquivo, fieldnames=campos)
         escritor.writeheader()
         escritor.writerows(biblioteca)
@@ -22,7 +22,7 @@ def buscar_livros(biblioteca, termo_busca):
     resultados = []
     termo_busca = termo_busca.lower()
     for livro in biblioteca:
-        if termo_busca in livro['titulo'].lower() or ['autor'].lower():
+        if termo_busca in livro['titulo'].lower() or termo_busca in livro['autor'].lower():
             resultados.append(livro)
     return resultados
 
@@ -44,18 +44,34 @@ def menu_cadastrar(lista_livros):
     print("Livro cadastrado com sucesso!")
 
 def menu_emprestar(lista_livros): 
-    print("Emprestar Livro")
+    print("\n-- Emprestar Livro --")
     isbn_busca = input("Digite o ISBN do livro para emprestar: ")
     encontrado = False
     for livro in lista_livros:
-        if livro['status'] == 'disponivel':
-        livro['status'] = 'emprestado'
-        print("Empréstimo realizado com sucesso!")
-    else:
-        print("O livro já está emprestado.")
-    break 
-if not encontrado:
+        if livro['isbn'] == isbn_busca:
+            encontrado = True
+            if livro['status'] == 'disponível':
+                livro['status'] = 'emprestado'
+                print("Empréstimo realizado com sucesso!")
+            else:
+                print("O livro já está emprestado.")
+            break
+    if not encontrado:
+        print("Livro não encontrado.")
+
+def menu_devolver(lista_livros):
+    print("Devolver Livro")
+    isbn_busca = input("Digite o ISBN do livro para devolver: ")
+    for livro in lista_livros:
+        if livro['isbn'] == isbn_busca:
+            if livro['status'] == 'emprestado':
+                livro['status'] = 'disponível'
+                print("Livro devolvido com sucesso!")
+            else:
+                print("O livro já está disponível.")
+            return  
     print("Livro não encontrado.")
+
 
 def menu_listar(lista_livros):
     print("Lista de Livros")
@@ -103,10 +119,10 @@ def principal():
         elif opcao == "2":
             menu_emprestar(lista_livros)
         elif opcao == "3":
-            menu_devolver(lista_livros)
-        elif opcao "4":
+            menu_devolver(lista_livros)  
+        elif opcao == "4":
             menu_listar(lista_livros)
-        elif opcao "5":
+        elif opcao == "5":
             print("Buscar livro")
             termo = input("Digite o título ou autor: ")
             resultados = buscar_livros(lista_livros, termo)
